@@ -43,8 +43,8 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         TableView.delegate = self
         TableView.dataSource = self
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItem.Style.done, target: self, action: #selector(filtered))
-        let keyboardGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(keyboardGestureRecognizer)
+//        let keyboardGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        view.addGestureRecognizer(keyboardGestureRecognizer)
         searchBarSetup()
     }
     @objc func hideKeyboard(){
