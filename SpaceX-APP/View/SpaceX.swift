@@ -48,9 +48,7 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         view.addGestureRecognizer(keyboardGestureRecognizer)
         searchBarSetup()
     }
-    @objc func hideKeyboard(){
-        view.endEditing(true)
-    }
+    
     @objc func filtered(){
         if searchBarController == 0 {
             searchBar?.isHidden = true
