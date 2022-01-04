@@ -16,7 +16,7 @@ class DetailsVC: UIViewController {
     
     
     var data = Data()
-    var selectedImageUrl : URL?
+    var selectedImageUrlString : String?
     var selectedNameLabel : String?
     var selectedTypeLabel : String?
     
@@ -27,18 +27,20 @@ class DetailsVC: UIViewController {
     }
     
     func getData(){
-        
-        if let selectedImageUrl = selectedImageUrl {
-            DispatchQueue.global().async {
-                do {
-                    self.data = try Data(contentsOf: selectedImageUrl)
-                    DispatchQueue.main.async {
-                        self.missionPatchImageView.image = UIImage(data: self.data)
+        if let selectedImageUrlString = selectedImageUrlString {
+            if let urlString = URL(string: selectedImageUrlString){
+                DispatchQueue.global().async {
+                    do {
+                        self.data = try Data(contentsOf: urlString)
+                        DispatchQueue.main.async {
+                            self.missionPatchImageView.image = UIImage(data: self.data)
+                        }
+                    } catch{
+                        print("ErrorDetailsImage")
                     }
-                } catch{
-                    print("ErrorDetailsImage")
                 }
             }
+          
         }
         if let selectedNameLabel = selectedNameLabel {
             rocketNameLabel.text = "Rocket Name: \(selectedNameLabel)"

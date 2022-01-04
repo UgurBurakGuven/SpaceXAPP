@@ -8,7 +8,6 @@
 import UIKit
 class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     private var spaceXViewModel : SpaceXListViewModel?
-   
 
     @IBOutlet weak var TableView: UITableView!
     var data = Data()
@@ -18,23 +17,15 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var rocketTypeArray = [String]()
     var chosenRocketName : String?
     var chosenRocketType : String?
-    var chosenImageUrl : URL?
+    var chosenImageUrl : String?
     
+    var response : [filteredStruct]? = []
+    var filteredData : [filteredStruct]? = []
     var searchBarArrayLaunchYear = [String]()
-    var searchBarArrayFlightNumber = [Int]()
-    var searchBarArrayMissionName = [String]()
-    var searchBarArrayMissionPatch = [String]()
-    var searchBarArrayMissionPatchSmall = [String]()
-    var searchBarArrayRocketName = [String]()
-    var searchBarArrayRocketType = [String]()
-    var searchBarModel : [SpaceXViewModel]?
     
-    var filteredData : [String]?
-    var index = 0
     let webservice = WebService()
     var searchBar : UISearchBar?
     var searchBarController = 0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +48,9 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             searchBar?.isHidden = false
             searchBarController -= 1
         }
+        
     }
+    
     func searchBarSetup(){
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 70))
         searchBar?.showsScopeBar = true
@@ -71,21 +64,15 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             WebService().downloadSpaceX(url: url) { (rockets) in
                 if let rockets = rockets {
                     self.spaceXViewModel = SpaceXListViewModel(SpaceX: rockets)
-                   // self.spaceXViewModel?.rocketAddIndex(self.spaceXViewModel?.numberOfRowsInSection() ?? 0 )
                     
                     DispatchQueue.main.async {
                         if let SpaceXViewModel = self.spaceXViewModel {
                             for result in 0..<SpaceXViewModel.SpaceX.count{
                                 self.searchBarArrayLaunchYear.append(SpaceXViewModel.SpaceX[result].launch_year ?? "")
-                                self.searchBarArrayFlightNumber.append(SpaceXViewModel.SpaceX[result].flight_number ?? 0)
-                                self.searchBarArrayMissionName.append(SpaceXViewModel.SpaceX[result].mission_name ?? "")
-                                self.searchBarArrayMissionPatch.append(SpaceXViewModel.SpaceX[result].links.mission_patch ?? "")
-                                self.searchBarArrayMissionPatchSmall.append(SpaceXViewModel.SpaceX[result].links.mission_patch_small ?? "")
-                                self.searchBarArrayRocketName.append(SpaceXViewModel.SpaceX[result].rocket.rocket_name ?? "")
-                                self.searchBarArrayRocketType.append(SpaceXViewModel.SpaceX[result].rocket.rocket_type ?? "")
                                 
+                                self.response?.append(filteredStruct(flightNumber: SpaceXViewModel.SpaceX[result].flight_number, missionName: SpaceXViewModel.SpaceX[result].mission_name, launchYear: SpaceXViewModel.SpaceX[result].launch_year, missionPatch: SpaceXViewModel.SpaceX[result].links.mission_patch, missionPatchSmall: SpaceXViewModel.SpaceX[result].links.mission_patch_small, rocketName: SpaceXViewModel.SpaceX[result].rocket.rocket_name, rocketType: SpaceXViewModel.SpaceX[result].rocket.rocket_type, test: 0))
                             }
-                            self.filteredData = self.searchBarArrayLaunchYear
+                            self.filteredData = self.response
                             
                         }
                         self.TableView.reloadData()
@@ -96,52 +83,40 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     }
     
-    
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return  spaceXViewModel?.numberOfRowsInSection() ?? 0
         return filteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainCell
-        
-        let rocketsViewModel = self.spaceXViewModel?.rocketAddIndex(indexPath.row)
-        
-        
-        if rocketsViewModel?.launch_year == filteredData![indexPath.row]{
- 
-                if let rocketNumber = rocketsViewModel?.flight_number{
-                    cell.FlightNumberLabel.text = "Flight Number: \(rocketNumber)"
+                
+        if let flightNumber = filteredData?[indexPath.row].flightNumber{
+                    cell.FlightNumberLabel.text = "Flight Number: \(flightNumber)"
                 }
                 
-                if let rocketName = rocketsViewModel?.rocket_name {
+        if let rocketName = filteredData?[indexPath.row].rocketName {
                     self.rocketNameArray.append(rocketName)
                 }
                 
-                if let rocketType = rocketsViewModel?.rocket_type {
+        if let rocketType = filteredData?[indexPath.row].rocketType {
                     self.rocketTypeArray.append(rocketType)
                 }
                     
-                
-                if let missionName = rocketsViewModel?.mission_name {
+        if let missionName = filteredData?[indexPath.row].missionName {
                     cell.MissionNameLabel.text = "Mission Name: \(missionName)"
                 }
                 
-               
-                if let launchYear = rocketsViewModel?.launch_year {
+        if let launchYear = filteredData?[indexPath.row].launchYear {
                     cell.LaunchYearLabel.text = "Launch Year: \(launchYear)"
                 }
             
-                if let imageUrl = rocketsViewModel?.mission_patch_small {
+        if let imageUrl = filteredData?[indexPath.row].missionPatchSmall {
                     if let urlString = URL(string: imageUrl){
                         DispatchQueue.global().async {
                             do {
                                 self.data = try Data(contentsOf: urlString)
                                 DispatchQueue.main.async {
                                     cell.MissionPatchImageView.image = UIImage(data: self.data)
-                                    self.imageUrlArray.append(urlString)
                                 }
                             } catch{
                                 print("errorGetImage")
@@ -149,25 +124,22 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                         }
                     }
                 }
-            
-        }
-     
         return cell
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailsVC"{
             let destinationVC = segue.destination as! DetailsVC
-            destinationVC.selectedImageUrl = chosenImageUrl
+            destinationVC.selectedImageUrlString = chosenImageUrl
             destinationVC.selectedNameLabel = chosenRocketName
             destinationVC.selectedTypeLabel = chosenRocketType
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chosenImageUrl = self.imageUrlArray[indexPath.row]
-        chosenRocketName = self.rocketNameArray[indexPath.row]
-        chosenRocketType = self.rocketTypeArray[indexPath.row]
+        chosenImageUrl = self.filteredData?[indexPath.row].missionPatchSmall
+        chosenRocketName = self.filteredData?[indexPath.row].rocketName
+        chosenRocketType = self.filteredData?[indexPath.row].rocketType
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
@@ -189,18 +161,19 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         filteredData = []
         
         if searchText == "" {
-            filteredData = searchBarArrayLaunchYear
+            filteredData = response
         } else {
-            for result in searchBarArrayLaunchYear {
-                if result.lowercased().contains(searchText.lowercased()) {
-                    filteredData?.append(result)
+            for counter in 0..<response!.count{
+                for result in searchBarArrayLaunchYear {
+                    if result.lowercased().contains(searchText.lowercased()){
+                            if response?[counter].launchYear == result {
+                                filteredData?.append(response![counter])
+                                break
+                            }
+                        }
                 }
             }
-           
         }
         self.TableView.reloadData()
     }
-
-
 }
-

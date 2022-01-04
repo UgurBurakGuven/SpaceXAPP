@@ -127,10 +127,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forest" translatesAutoresizingMaskIntoConstraints="NO" id="sRv-de-eho">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wz-30-8Bj">
-                                <rect key="frame" x="54" y="127" width="307" height="331"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4wz-30-8Bj">
+                                <rect key="frame" x="54" y="127" width="313" height="331"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="331" id="SbS-JN-1F9"/>
+                                    <constraint firstAttribute="height" constant="331" id="GZr-Rx-3Hi"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-qO-ApD">
@@ -157,18 +157,18 @@
                         <viewLayoutGuide key="safeArea" id="Qu3-Pe-Y7o"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="4wz-30-8Bj" firstAttribute="centerX" secondItem="zNI-qO-ApD" secondAttribute="centerX" id="62z-Nh-gHR"/>
-                            <constraint firstItem="4wz-30-8Bj" firstAttribute="leading" secondItem="Qu3-Pe-Y7o" secondAttribute="leading" constant="54" id="9JN-o8-Sh4"/>
                             <constraint firstItem="zNI-qO-ApD" firstAttribute="leading" secondItem="Qu3-Pe-Y7o" secondAttribute="leading" constant="88" id="CBN-O0-mNm"/>
                             <constraint firstItem="2fS-Y8-OFJ" firstAttribute="top" secondItem="zNI-qO-ApD" secondAttribute="bottom" constant="22" id="CcE-Vl-OFy"/>
+                            <constraint firstItem="4wz-30-8Bj" firstAttribute="centerX" secondItem="zNI-qO-ApD" secondAttribute="centerX" constant="3.5" id="Dop-zP-T38"/>
                             <constraint firstItem="zNI-qO-ApD" firstAttribute="trailing" secondItem="2fS-Y8-OFJ" secondAttribute="trailing" id="FWq-Ob-dzZ"/>
                             <constraint firstItem="sRv-de-eho" firstAttribute="top" secondItem="Qu3-Pe-Y7o" secondAttribute="top" id="JOx-zC-aNO"/>
                             <constraint firstItem="zNI-qO-ApD" firstAttribute="leading" secondItem="2fS-Y8-OFJ" secondAttribute="leading" id="QCu-Mr-qpe"/>
                             <constraint firstItem="sRv-de-eho" firstAttribute="leading" secondItem="Qu3-Pe-Y7o" secondAttribute="leading" id="SpR-5D-yAp"/>
                             <constraint firstItem="sRv-de-eho" firstAttribute="centerX" secondItem="Nea-Ol-lPw" secondAttribute="centerX" id="eo3-bC-5zl"/>
                             <constraint firstItem="sRv-de-eho" firstAttribute="centerX" secondItem="zNI-qO-ApD" secondAttribute="centerX" id="h2y-87-BaC"/>
-                            <constraint firstItem="4wz-30-8Bj" firstAttribute="top" secondItem="Qu3-Pe-Y7o" secondAttribute="top" constant="39" id="hz1-QE-x3C"/>
                             <constraint firstItem="sRv-de-eho" firstAttribute="bottom" secondItem="Qu3-Pe-Y7o" secondAttribute="bottom" id="k0n-Je-o57"/>
+                            <constraint firstItem="4wz-30-8Bj" firstAttribute="leading" secondItem="Qu3-Pe-Y7o" secondAttribute="leading" constant="54" id="k10-Fg-Qd3"/>
+                            <constraint firstItem="4wz-30-8Bj" firstAttribute="top" secondItem="Qu3-Pe-Y7o" secondAttribute="top" constant="39" id="l9i-Ze-cwT"/>
                             <constraint firstItem="Qu3-Pe-Y7o" firstAttribute="bottom" secondItem="2fS-Y8-OFJ" secondAttribute="bottom" constant="104" id="tWx-Px-o2S"/>
                         </constraints>
                     </view>

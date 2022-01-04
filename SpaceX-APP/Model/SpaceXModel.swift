@@ -25,3 +25,14 @@ struct spaceX: Decodable {
     let rocket_name : String?
     let rocket_type : String?
 }
+
+struct filteredStruct {
+    var flightNumber : Int?
+    var missionName : String?
+    var launchYear : String?
+    var missionPatch : String?
+    var missionPatchSmall : String?
+    var rocketName : String?
+    var rocketType : String?
+    var test : Int?
+}
