@@ -36,10 +36,8 @@ struct SpaceXViewModel {
     var launch_year : String? {
         return self.SpaceX.launch_year
     }
-    
     var rocket_name : String? {
         return self.SpaceX.rocket.rocket_name
-        
     }
     var rocket_type : String? {
         return self.SpaceX.rocket.rocket_type

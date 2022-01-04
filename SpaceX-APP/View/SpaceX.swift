@@ -11,10 +11,6 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
 
     @IBOutlet weak var TableView: UITableView!
     var data = Data()
-    var flightNumberArray = [Int]()
-    var imageUrlArray = [URL]()
-    var rocketNameArray = [String]()
-    var rocketTypeArray = [String]()
     var chosenRocketName : String?
     var chosenRocketType : String?
     var chosenImageUrl : String?
@@ -26,6 +22,7 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     let webservice = WebService()
     var searchBar : UISearchBar?
     var searchBarController = 0
+    var searchBarTitle : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +30,7 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         TableView.delegate = self
         TableView.dataSource = self
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItem.Style.done, target: self, action: #selector(filtered))
+        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Filter Off", style: UIBarButtonItem.Style.done, target: self, action: #selector(filtered))
         let keyboardGestureRecognizer = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         keyboardGestureRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(keyboardGestureRecognizer)
@@ -42,11 +39,16 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     @objc func filtered(){
         if searchBarController == 0 {
+            navigationController?.navigationBar.topItem?.rightBarButtonItem?.title = "Filter On"
             searchBar?.isHidden = true
             searchBarController += 1
+      
+            
         } else if searchBarController == 1{
+            navigationController?.navigationBar.topItem?.rightBarButtonItem?.title = "Filter Off"
             searchBar?.isHidden = false
             searchBarController -= 1
+         
         }
         
     }
@@ -54,7 +56,7 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func searchBarSetup(){
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 70))
         searchBar?.showsScopeBar = true
-        searchBar?.scopeButtonTitles = ["year"]
+        searchBar?.scopeButtonTitles = ["Filter By Launch Year"]
         searchBar?.delegate = self
         self.TableView.tableHeaderView = searchBar
     }
@@ -92,14 +94,6 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 
         if let flightNumber = filteredData?[indexPath.row].flightNumber{
                     cell.FlightNumberLabel.text = "Flight Number: \(flightNumber)"
-                }
-                
-        if let rocketName = filteredData?[indexPath.row].rocketName {
-                    self.rocketNameArray.append(rocketName)
-                }
-                
-        if let rocketType = filteredData?[indexPath.row].rocketType {
-                    self.rocketTypeArray.append(rocketType)
                 }
                     
         if let missionName = filteredData?[indexPath.row].missionName {
