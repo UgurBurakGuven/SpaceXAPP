@@ -20,11 +20,21 @@ class DetailsVC: UIViewController {
     var selectedNameLabel : String?
     var selectedTypeLabel : String?
     
+    var detailData: filteredStruct?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getDetailData()
+    }
+    
+    func getDetailData() {
+        self.selectedImageUrlString = detailData?.missionPatchSmall
+        self.selectedNameLabel = detailData?.rocketName
+        self.selectedTypeLabel = detailData?.rocketType
         getData()
     }
+    
     
     func getData(){
         if let selectedImageUrlString = selectedImageUrlString {

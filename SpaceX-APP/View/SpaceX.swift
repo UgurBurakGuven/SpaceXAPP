@@ -6,14 +6,11 @@
 //
 
 import UIKit
-class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class SpaceX: UIViewController{
     private var spaceXViewModel : SpaceXListViewModel?
 
-    @IBOutlet weak var TableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     var data = Data()
-    var chosenRocketName : String?
-    var chosenRocketType : String?
-    var chosenImageUrl : String?
     
     var response : [filteredStruct]? = []
     var filteredData : [filteredStruct]? = []
@@ -28,8 +25,8 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         super.viewDidLoad()
         getData()
         
-        TableView.delegate = self
-        TableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Filter Off", style: UIBarButtonItem.Style.done, target: self, action: #selector(filtered))
         let keyboardGestureRecognizer = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         keyboardGestureRecognizer.cancelsTouchesInView = false
@@ -58,12 +55,11 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar?.showsScopeBar = true
         searchBar?.scopeButtonTitles = ["Filter By Launch Year"]
         searchBar?.delegate = self
-        self.TableView.tableHeaderView = searchBar
+        self.tableView.tableHeaderView = searchBar
     }
 
     func getData() {
-        if let url = URL(string: "https://api.spacexdata.com/v2/launches"){
-            WebService().downloadSpaceX(url: url) { (rockets) in
+            WebService().downloadSpaceX(path: App.listPath) { (rockets) in
                 if let rockets = rockets {
                     self.spaceXViewModel = SpaceXListViewModel(SpaceX: rockets)
                     
@@ -77,20 +73,24 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                             self.filteredData = self.response
                             
                         }
-                        self.TableView.reloadData()
+                        self.tableView.reloadData()
                     }
                 }
             }
-        }
     
     }
+    
+}
+// MARK: - UITableViewDelegates and UITableViewDataSource
+
+extension SpaceX : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainCell
                 
         if let flightNumber = filteredData?[indexPath.row].flightNumber{
                     cell.FlightNumberLabel.text = "Flight Number: \(flightNumber)"
@@ -120,21 +120,11 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 }
         return cell
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetailsVC"{
-            let destinationVC = segue.destination as! DetailsVC
-            destinationVC.selectedImageUrlString = chosenImageUrl
-            destinationVC.selectedNameLabel = chosenRocketName
-            destinationVC.selectedTypeLabel = chosenRocketType
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chosenImageUrl = self.filteredData?[indexPath.row].missionPatchSmall
-        chosenRocketName = self.filteredData?[indexPath.row].rocketName
-        chosenRocketType = self.filteredData?[indexPath.row].rocketType
-        performSegue(withIdentifier: "toDetailsVC", sender: nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let detailVC = storyBoard.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsVC
+        detailVC.detailData = self.filteredData?[indexPath.row]
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
     
@@ -151,6 +141,11 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
+
+}
+
+//MARK: - UISearchBarDelegate
+extension SpaceX: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = []
         
@@ -168,6 +163,11 @@ class SpaceX: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 }
             }
         }
-        self.TableView.reloadData()
+        self.tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
     }
 }
+

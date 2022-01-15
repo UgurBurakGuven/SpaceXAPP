@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0121DD1278DEC5200C90938 /* AppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0121DD0278DEC5200C90938 /* AppUtilities.swift */; };
 		D048700C2773691000709F0D /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048700B2773691000709F0D /* DetailsVC.swift */; };
 		D04DEA4B2771C4E600001C7D /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DEA4A2771C4E600001C7D /* WebService.swift */; };
 		D04DEA4D2771C53A00001C7D /* SpaceXModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DEA4C2771C53A00001C7D /* SpaceXModel.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D0121DD0278DEC5200C90938 /* AppUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
 		D048700B2773691000709F0D /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		D04DEA4A2771C4E600001C7D /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		D04DEA4C2771C53A00001C7D /* SpaceXModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXModel.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D0121DCB278DE31C00C90938 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D0F99EC92770D5750002CE74 /* MainCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		D04DEA452771C49E00001C7D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,10 +78,10 @@
 		D04DEA482771C4C700001C7D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D0121DCB278DE31C00C90938 /* Cells */,
 				D0F99EB42770BB770002CE74 /* SceneDelegate.swift */,
 				D0F99EB22770BB770002CE74 /* AppDelegate.swift */,
 				D0F99EB62770BB770002CE74 /* SpaceX.swift */,
-				D0F99EC92770D5750002CE74 /* MainCell.swift */,
 				D048700B2773691000709F0D /* DetailsVC.swift */,
 			);
 			path = View;
@@ -113,6 +123,7 @@
 				D0F99EC02770BB780002CE74 /* LaunchScreen.storyboard */,
 				D0F99EC32770BB780002CE74 /* Info.plist */,
 				D0F99EBB2770BB770002CE74 /* SpaceX_APP.xcdatamodeld */,
+				D0121DD0278DEC5200C90938 /* AppUtilities.swift */,
 			);
 			path = "SpaceX-APP";
 			sourceTree = "<group>";
@@ -190,6 +201,7 @@
 			files = (
 				D04DEA4F2771C6F700001C7D /* SpaceXViewModel.swift in Sources */,
 				D04DEA4B2771C4E600001C7D /* WebService.swift in Sources */,
+				D0121DD1278DEC5200C90938 /* AppUtilities.swift in Sources */,
 				D0F99EB72770BB770002CE74 /* SpaceX.swift in Sources */,
 				D0F99EB32770BB770002CE74 /* AppDelegate.swift in Sources */,
 				D048700C2773691000709F0D /* DetailsVC.swift in Sources */,

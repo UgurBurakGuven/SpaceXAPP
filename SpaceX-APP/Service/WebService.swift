@@ -8,16 +8,10 @@
 import Foundation
 
 class WebService {
-    /*
-    func downloadSpaceXAsync(url: URL) async throws ->[spaceXList] {
-        let (data, _ ) = try await URLSession.shared.data(from: url)
-        let SpaceXList = try? JSONDecoder().decode([spaceXList].self, from: data)
-        return SpaceXList ?? []
-    }
-    */
-    func downloadSpaceX(url: URL, completion: @escaping([spaceXList]?) -> () ){
-        
-        URLSession.shared.dataTask(with: url) { data, response, error  in
+   
+    func downloadSpaceX(path: String, completion: @escaping([spaceXList]?) -> () ){
+        guard let apiURL = URL(string: App.baseURL + path) else { return }
+        URLSession.shared.dataTask(with: apiURL) { data, response, error  in
             if let error = error {
                 print(error.localizedDescription)
                 completion(nil)
