@@ -2,6 +2,7 @@
 
 ### - SpaceXApp application with details.
 ### - Shot using URLSession from SpaceXapi.
+### - Using Searchbar.
 
 ## * Pictures of the app *
 
