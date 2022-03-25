@@ -2,6 +2,7 @@
 
 ### - SpaceXApp application with details.
 ### - Shot using URLSession from SpaceXapi.
+### - Using MVVM Principle.
 ### - Using Searchbar.
 
 ## * Pictures of the app *
